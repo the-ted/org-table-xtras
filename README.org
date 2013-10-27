@@ -1,4 +1,40 @@
-org-table-xtras
-===============
+* org-table-xtras
 
-Some extra functionality for org-tables.
+  This emacs minor mode adds some extra functionality to org-mode tables. It's a bit hacked together at the moment. Note that it edits some variables, such as *org-latex-tables-centered* and *org-calc-default-modes*.
+
+  To use, just put the .el file in your load-path and load the minor mode via 
+
+#+BEGIN_SRC 
+M-x org-table-xtras
+#+END_SRC
+
+  This minor mode includes the following commands:
+
+#+BEGIN_SRC 
+C-c C-= C-n : org-table-xtras-copy-field-next-row
+#+END_SRC
+
+  This shortcut copies a field formula into the next row. A prefix argument copies the field formula into multiple rows. A negative prefix argument copies the field formula up. 
+  
+#+BEGIN_SRC 
+C-c C-= C-f : org-table-xtras-copy-field-next-column
+#+END_SRC
+
+  Similarly, but with columns.
+
+#+BEGIN_SRC 
+C-c C-= C-d : org-table-xtras-copy-field-diagonally
+#+END_SRC
+
+  Similarly, but diagonally through the spreadsheet.
+
+#+BEGIN_SRC 
+C-c C-= C-p : org-table-xtras-print-formulas
+#+END_SRC
+
+  This adds formulas in a *tablenotes* environment below the table, and adds reference footnotes to the relevant table cells. If you'd like to edit the table after including the reference footnotes, C-u C-u C-c C-* will recalculate the table.
+
+
+  See [[example.org]] for an example. This org-file generates [[example.pdf]].
+
+
