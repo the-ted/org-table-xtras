@@ -136,6 +136,39 @@
       (insert "\\end{tablenotes}")))))
 
 
+(defun org-table-xtras-eval-table (TBLNAME ARGS OUTPUTVAR)
+  (save-excursion
+    (org-table-xtras-go-to-table TBLNAME)
+    (let* ((beg (org-table-begin))
+	   (end (save-excursion 
+		  (progn 
+		    (goto-char (org-table-end))
+		    (org-TBLFM-begin)
+		    (line-end-position))))
+	   (buf (current-buffer)))
+      (with-temp-buffer
+	(switch-to-buffer (current-buffer) nil t)
+	(insert-buffer-substring buf beg end)
+	(org-mode)
+	(goto-char 1)
+	(forward-line)
+	(dolist (item ARGS)
+	  (org-table-xtras-replace-param item))
+	(org-table-iterate)
+	(message (substring-no-properties (org-table-get-constant OUTPUTVAR)))))))
+
+(defun org-table-xtras-replace-param (item)
+  (let* ((param (car item))
+	 (value (cdr item)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward (concat param " *=[\.A-z0-9]* *|") nil t)
+	(replace-match (concat param "=" value "|"))))))
+	       
+(defun org-table-xtras-go-to-table (name)
+  (goto-char (point-min))
+  (re-search-forward (concat "#\\+TBLNAME: +" name))
+  (forward-line))
 
 (define-minor-mode org-table-xtras
   "Some Add-ins for org-table"
@@ -146,3 +179,5 @@
 		(define-key map (kbd "C-c C-= C-d") 'org-table-xtras-copy-field-diagonally)
 		(define-key map (kbd "C-c C-= C-p") 'org-table-xtras-print-formulas)
 		map))
+
+
