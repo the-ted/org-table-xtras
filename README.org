@@ -37,4 +37,5 @@ C-c C-= C-p : org-table-xtras-print-formulas
 
   See [[example.org]] for an example. This org-file generates [[example.pdf]].
 
-
+** Spreadsheets as functions
+   I also wrote a function, org-table-xtras-eval-table, that returns the value of a parameter from a spreadsheet given alternative values for some given parameters. This is analagous to excel's "Scenario Manager" functionality, but it treats each spreadsheet as a fully autonomous function. For example, [[example2.org]] includes a primitive DCF spreadsheet that takes a number of parameters (cost of equity, growth rates, etc.) as arguments. You can then see what the DCF would return under different COE values in the second table, where org-table-xtras is called for different values.
