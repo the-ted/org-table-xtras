@@ -1,0 +1,79 @@
+
+
+
+
+* Example 2
+
+#+TBLNAME: NPV
+| $ | rate=.07       |
+| $ | n=50           |
+| $ | payment = 1000 |
+| # | 13800.746      |
+| ^ | Result         |
+#+TBLFM: $Result=pv($rate,$n,$payment)
+
+#+LATEX_HEADER: \usepackage{threeparttable}
+#+AUTHOR: 
+#+LATEX: \begin{table}
+#+LATEX: \centering
+#+LATEX: \begin{threeparttable}
+#+TBLNAME: DCF
+|   |     Year | Growth        | Cash              | Discounted Cash  |
+|---+----------+---------------+-------------------+------------------|
+| # |        0 |               | 500               | 500              |
+| # |        1 | 0.15\tnote{2} | 575.00\tnote{5}   | 527.52\tnote{1}  |
+| # |        2 | 0.15\tnote{2} | 661.25\tnote{5}   | 556.56\tnote{1}  |
+| # |        3 | 0.15\tnote{2} | 760.44\tnote{5}   | 587.20\tnote{1}  |
+| # |        4 | 0.15\tnote{2} | 874.51\tnote{5}   | 619.52\tnote{1}  |
+| # |        5 | 0.15\tnote{2} | 1005.69\tnote{5}  | 653.63\tnote{1}  |
+| # |        6 | 0.05\tnote{3} | 1055.97\tnote{5}  | 629.64\tnote{1}  |
+| # |        7 | 0.05\tnote{3} | 1108.77\tnote{5}  | 606.54\tnote{1}  |
+| # |        8 | 0.05\tnote{3} | 1164.21\tnote{5}  | 584.28\tnote{1}  |
+| # |        9 | 0.05\tnote{3} | 1222.42\tnote{5}  | 562.84\tnote{1}  |
+| # |       10 | 0.05\tnote{3} | 1283.54\tnote{5}  | 542.18\tnote{1}  |
+| # |       10 | (perpetuity)  | 22034.10\tnote{4} | 9307.44\tnote{1} |
+|   |          |               |                   | 15677.35         |
+| ^ |          |               |                   | DCF              |
+| $ | g1t5=.15 | g6t10=.05     |                   |                  |
+| $ |  COE=.09 | g=.03         |                   |                  |
+#+TBLFM: @3$3=$g1t5::@3$4=@-1*(1+$-1)::@3$5=$-1*(1/(1+$COE)^$2)::@4$3=$g1t5::@4$4=@-1*(1+$-1)::@4$5=$-1*(1/(1+$COE)^$2)::@5$3=$g1t5::@5$4=@-1*(1+$-1)::@5$5=$-1*(1/(1+$COE)^$2)::@6$3=$g1t5::@6$4=@-1*(1+$-1)::@6$5=$-1*(1/(1+$COE)^$2)::@7$3=$g1t5::@7$4=@-1*(1+$-1)::@7$5=$-1*(1/(1+$COE)^$2)::@8$3=$g6t10::@8$4=@-1*(1+$-1)::@8$5=$-1*(1/(1+$COE)^$2)::@9$3=$g6t10::@9$4=@-1*(1+$-1)::@9$5=$-1*(1/(1+$COE)^$2)::@10$3=$g6t10::@10$4=@-1*(1+$-1)::@10$5=$-1*(1/(1+$COE)^$2)::@11$3=$g6t10::@11$4=@-1*(1+$-1)::@11$5=$-1*(1/(1+$COE)^$2)::@12$3=$g6t10::@12$4=@-1*(1+$-1)::@12$5=$-1*(1/(1+$COE)^$2)::@13$4=(@-1(1+$g))/($COE-$g)::@13$5=$-1*(1/(1+$COE)^$2)::$DCF=vsum(@2..@-1)
+
+\begin{tablenotes}
+\item [1] \(\$-1*(1/(1+\$COE)^\$2)\)
+\item [2] \(\$g1t5\)
+\item [3] \(\$g6t10\)
+\item [4] \((@-1(1+\$g))/(\$COE-\$g)\)
+\item [5] \(@-1*(1+\$-1)\)
+\item [6] \(vsum(@2..@-1)\)
+\end{tablenotes}
+
+#+LATEX: \end{threeparttable}
+#+LATEX: \end{table}
+
+
+
+#+LATEX_HEADER: \usepackage{threeparttable}
+#+AUTHOR: 
+#+LATEX: \begin{table}
+#+LATEX: \centering
+#+LATEX: \begin{threeparttable}
+
+| COE |DCF\tnote{1}|
+|-----+--------------|
+| .04 |     97480.87 |
+| .05 |     48332.71 |
+| .06 |     31973.63 |
+| .07 |     23810.54 |
+| .08 |     18924.93 |
+| .09 |     15677.35 |
+| .10 |     13365.25 |
+| .11 |     11637.39 |
+| .12 |     10298.65 |
+#+TBLFM: $2='(org-table-xtras-eval-table "DCF" '(("COE" . $1)) "DCF")
+
+\begin{tablenotes}
+\item [1] \('(org-table-xtras-eval-table "DCF" '(("COE" . \$1)) "DCF")\)
+\end{tablenotes}
+
+#+LATEX: \end{threeparttable}
+#+LATEX: \end{table}

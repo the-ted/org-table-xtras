@@ -1,0 +1,99 @@
+% Created 2013-11-16 Sat 18:38
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{threeparttable}
+\usepackage{threeparttable}
+\date{\today}
+\title{example2}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.3.1 (Org mode 8.0.3)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Example 2}
+\label{sec-1}
+
+\begin{tabular}{r}
+13800.746\\
+\end{tabular}
+
+\begin{table}
+\centering
+\begin{threeparttable}
+\begin{tabular}{rlll}
+Year & Growth & Cash & Discounted Cash\\
+\hline
+0 &  & 500 & 500\\
+1 & 0.15\tnote{2} & 575.00\tnote{5} & 527.52\tnote{1}\\
+2 & 0.15\tnote{2} & 661.25\tnote{5} & 556.56\tnote{1}\\
+3 & 0.15\tnote{2} & 760.44\tnote{5} & 587.20\tnote{1}\\
+4 & 0.15\tnote{2} & 874.51\tnote{5} & 619.52\tnote{1}\\
+5 & 0.15\tnote{2} & 1005.69\tnote{5} & 653.63\tnote{1}\\
+6 & 0.05\tnote{3} & 1055.97\tnote{5} & 629.64\tnote{1}\\
+7 & 0.05\tnote{3} & 1108.77\tnote{5} & 606.54\tnote{1}\\
+8 & 0.05\tnote{3} & 1164.21\tnote{5} & 584.28\tnote{1}\\
+9 & 0.05\tnote{3} & 1222.42\tnote{5} & 562.84\tnote{1}\\
+10 & 0.05\tnote{3} & 1283.54\tnote{5} & 542.18\tnote{1}\\
+10 & (perpetuity) & 22034.10\tnote{4} & 9307.44\tnote{1}\\
+ &  &  & 15677.35\\
+\end{tabular}
+
+\begin{tablenotes}
+\item [1] \(\$-1*(1/(1+\$COE)^\$2)\)
+\item [2] \(\$g1t5\)
+\item [3] \(\$g6t10\)
+\item [4] \((@-1(1+\$g))/(\$COE-\$g)\)
+\item [5] \(@-1*(1+\$-1)\)
+\item [6] \(vsum(@2..@-1)\)
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+
+
+
+\begin{table}
+\centering
+\begin{threeparttable}
+
+\begin{tabular}{rr}
+COE & DCF\tnote{1}\\
+\hline
+.04 & 97480.87\\
+.05 & 48332.71\\
+.06 & 31973.63\\
+.07 & 23810.54\\
+.08 & 18924.93\\
+.09 & 15677.35\\
+.10 & 13365.25\\
+.11 & 11637.39\\
+.12 & 10298.65\\
+\end{tabular}
+
+\begin{tablenotes}
+\item [1] \('(org-table-xtras-eval-table "DCF" '(("COE" . \$1)) "DCF")\)
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+% Emacs 24.3.1 (Org mode 8.0.3)
+\end{document}

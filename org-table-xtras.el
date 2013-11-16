@@ -78,7 +78,8 @@
   (let* ((expr "[\\.@]\\([0-9-]+\\)\\$\\(-?[0-9]+\\)")
 	 (expr-2 "\\$\\(-?[0-9]+\\)"))
     (replace-regexp-in-string expr-2 "\\\\$\\1" 
-			      (replace-regexp-in-string expr "(\\1,\\2)" text))))
+			      (replace-regexp-in-string expr "(\\1,\\2)"
+							(replace-regexp-in-string "\\$" "\\\\$" text)))))
 
 (defun org-table-xtras-update-table (entry index update-table)
   (let* (
