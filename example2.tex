@@ -1,4 +1,4 @@
-% Created 2013-11-16 Sat 18:38
+% Created 2013-11-17 Sun 13:18
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -16,6 +16,7 @@
 \usepackage{amstext}
 \usepackage{hyperref}
 \tolerance=1000
+\usepackage{threeparttable}
 \usepackage{threeparttable}
 \usepackage{threeparttable}
 \date{\today}
@@ -43,27 +44,55 @@
 Year & Growth & Cash & Discounted Cash\\
 \hline
 0 &  & 500 & 500\\
-1 & 0.15\tnote{2} & 575.00\tnote{5} & 527.52\tnote{1}\\
-2 & 0.15\tnote{2} & 661.25\tnote{5} & 556.56\tnote{1}\\
-3 & 0.15\tnote{2} & 760.44\tnote{5} & 587.20\tnote{1}\\
-4 & 0.15\tnote{2} & 874.51\tnote{5} & 619.52\tnote{1}\\
-5 & 0.15\tnote{2} & 1005.69\tnote{5} & 653.63\tnote{1}\\
-6 & 0.05\tnote{3} & 1055.97\tnote{5} & 629.64\tnote{1}\\
-7 & 0.05\tnote{3} & 1108.77\tnote{5} & 606.54\tnote{1}\\
-8 & 0.05\tnote{3} & 1164.21\tnote{5} & 584.28\tnote{1}\\
-9 & 0.05\tnote{3} & 1222.42\tnote{5} & 562.84\tnote{1}\\
-10 & 0.05\tnote{3} & 1283.54\tnote{5} & 542.18\tnote{1}\\
-10 & (perpetuity) & 22034.10\tnote{4} & 9307.44\tnote{1}\\
- &  &  & 15677.35\\
+1 & \(0.15\)\tnote{4} & \(575.00\)\tnote{3} & \(527.52\)\tnote{1}\\
+2 & \(0.15\)\tnote{4} & \(661.25\)\tnote{3} & \(556.56\)\tnote{1}\\
+3 & \(0.15\)\tnote{4} & \(760.44\)\tnote{3} & \(587.20\)\tnote{1}\\
+4 & \(0.15\)\tnote{4} & \(874.51\)\tnote{3} & \(619.52\)\tnote{1}\\
+5 & \(0.15\)\tnote{4} & \(1005.69\)\tnote{3} & \(653.63\)\tnote{1}\\
+6 & \(0.05\)\tnote{5} & \(1055.97\)\tnote{3} & \(629.64\)\tnote{1}\\
+7 & \(0.05\)\tnote{5} & \(1108.77\)\tnote{3} & \(606.54\)\tnote{1}\\
+8 & \(0.05\)\tnote{5} & \(1164.21\)\tnote{3} & \(584.28\)\tnote{1}\\
+9 & \(0.05\)\tnote{5} & \(1222.42\)\tnote{3} & \(562.84\)\tnote{1}\\
+10 & \(0.05\)\tnote{5} & \(1283.54\)\tnote{3} & \(542.18\)\tnote{1}\\
+10 & (perpetuity) & \(22034.10\)\tnote{2} & \(9307.44\)\tnote{1}\\
+ &  &  & \(15677.35\)\tnote{6}\\
 \end{tabular}
 
 \begin{tablenotes}
-\item [1] \(\$-1*(1/(1+\$COE)^\$2)\)
-\item [2] \(\$g1t5\)
-\item [3] \(\$g6t10\)
-\item [4] \((@-1(1+\$g))/(\$COE-\$g)\)
-\item [5] \(@-1*(1+\$-1)\)
+\item [1] \(\$-1*(1/(1+\mbox{\$COE})^{\$-3})\)
+\item [2] \((@-1(1+\mbox{\$g}))/(\mbox{\$COE}-\mbox{\$g})\)
+\item [3] \(@-1*(1+\$-1)\)
+\item [4] \(\mbox{\$g1t5}\)
+\item [5] \(\mbox{\$g6t10}\)
 \item [6] \(vsum(@2..@-1)\)
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+
+
+\begin{table}
+\centering
+\begin{threeparttable}
+
+\begin{tabular}{l|l}
+Column A & Column B\\
+\hline
+\(5\)\tnote{5} & \\
+\(\frac{1}{5}\)\tnote{4} & \\
+\(\frac{1}{2}\)\tnote{3} & \(\frac{1}{4}\)\tnote{2}\\
+ & \(25\)\tnote{1}\\
+\(25\)\tnote{6} & \\
+\hline
+\end{tabular}
+
+\begin{tablenotes}
+\item [1] \(@-1*100\)
+\item [2] \(\frac{\$2}{2}\)
+\item [3] \(\frac{1}{2}\)
+\item [4] \(\frac{2}{10}\)
+\item [5] \(\mbox{\$parameter}\)
+\item [6] \(\mbox{\$parameter}*5\)
 \end{tablenotes}
 
 \end{threeparttable}
@@ -76,7 +105,7 @@ Year & Growth & Cash & Discounted Cash\\
 \begin{threeparttable}
 
 \begin{tabular}{rr}
-COE & DCF\tnote{1}\\
+COE & \(DCF\)\tnote{1}\\
 \hline
 .04 & 97480.87\\
 .05 & 48332.71\\

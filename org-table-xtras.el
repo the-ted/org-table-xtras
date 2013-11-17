@@ -81,6 +81,10 @@
 			      (replace-regexp-in-string expr "(\\1,\\2)"
 							(replace-regexp-in-string "\\$" "\\\\$" text)))))
 
+(defun org-table-xtras-clean-entry-formula (text) 
+  (replace-regexp-in-string "\\$" "\\\\$" text))
+
+
 (defun org-table-xtras-update-table (entry index update-table)
   (let* (
 	 (strindex (int-to-string index))
@@ -101,7 +105,7 @@
       ;;FIXME
       (previous-line (+ 3 index))
       (org-table-put row col 
-		     (concat oldvalue "\\tnote{" strindex "}")))))
+		     (concat "\\(" oldvalue "\\)" "\\tnote{" strindex "}")))))
 
 (defun org-table-xtras-sort-formulas (x y)
   (string< (cdr x) (cdr y)))
