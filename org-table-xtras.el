@@ -39,7 +39,7 @@
       (org-table-goto-line newline)
       (org-table-goto-column newcol)
       (org-table-maybe-eval-formula)
-      (if (> n 0)
+      (if (> n 1)
 	  (org-table-xtras-copy-formula (- n 1) type negative?)))))
 
 (defun org-table-xtras-copy-field-next-row (&optional a)
