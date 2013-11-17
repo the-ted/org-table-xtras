@@ -123,19 +123,17 @@
 (defun org-table-xtras-print-formulas ()
   (interactive)
   (let* ((fns (sort* (org-table-get-stored-formulas) 'org-table-xtras-sort-formulas)))
-    (save-excursion
       (goto-char (org-table-end))
       (next-line 2)
       (let* ((start-search (looking-at "\\\\begin\{tablenotes\}.*"))
 	     (start-pos (if start-search (match-beginning 0)))
-	     (end-search (re-search-forward "\\\\end\{tablenotes\}.*" nil t nil))
+	     (end-search (if start-search ((re-search-forward "\\\\end\{tablenotes\}.*" nil t nil))))
 	     (end-pos (if end-search (match-end 0))))
 	  (if (and start-pos end-pos)
 	      (delete-region start-pos end-pos))
       (insert "\\begin{tablenotes}\n")
       (org-table-xtras-insert-formulas (car fns) (cdr fns) 1)
-      (insert "\\end{tablenotes}")))))
-
+      (insert "\\end{tablenotes}"))))
 
 (defun org-table-xtras-eval-table (TBLNAME ARGS OUTPUTVAR)
   (save-excursion
