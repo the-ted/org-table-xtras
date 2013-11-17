@@ -127,7 +127,7 @@
       (next-line 2)
       (let* ((start-search (looking-at "\\\\begin\{tablenotes\}.*"))
 	     (start-pos (if start-search (match-beginning 0)))
-	     (end-search (if start-search ((re-search-forward "\\\\end\{tablenotes\}.*" nil t nil))))
+	     (end-search (if start-search (re-search-forward "\\\\end\{tablenotes\}.*" nil t nil)))
 	     (end-pos (if end-search (match-end 0))))
 	  (if (and start-pos end-pos)
 	      (delete-region start-pos end-pos))
