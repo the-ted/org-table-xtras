@@ -261,6 +261,4 @@ the form '((ARGNAME . VALUE))"
 		(define-key map (kbd "C-c C-= C-p") 'org-table-xtras-print-formulas)
 		map))
 
-
-
 (provide 'org-table-xtras-mode)
