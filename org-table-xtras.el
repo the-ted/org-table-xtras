@@ -59,7 +59,9 @@
  calc-language latex))
 
 (defun org-table-xtras-copy-formula (n type &optional negative?)
-  "Copy a formula N times, either across a :row, :column, or :diag. If you want to copy the formula from right-to-left or down-to-up instead, set NEGATIVE? to t."
+  "Copy a formula N times, either across a :row, :column,
+or :diag (values for TYPE). If you want to copy the formula from
+right-to-left or down-to-up instead, set NEGATIVE? to t."
   (let* ((offset (case type
 		   (:row '(1 0))
 		   (:col '(0 1))
