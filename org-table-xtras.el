@@ -183,7 +183,7 @@ order."
 	     (form2 (cdr (first entries)))
 	     (usable-index (if (eq nil index) 1 index)))
 	(if (> (length entries) 0)
-	    (if (equalp form1 form2)
+	    (if (equalp form1 form2) ;; If this is a duplicative formula
 		(progn
 		  (org-table-xtras-update-table e usable-index nil)
 		  (org-table-xtras-insert-formulas (car entries) (cdr entries) usable-index))
@@ -191,6 +191,13 @@ order."
 		(org-table-xtras-update-table e usable-index t)
 		(org-table-xtras-insert-formulas (car entries) (cdr entries) (+ 1 usable-index))))
 	  (org-table-xtras-update-table e usable-index t))))
+
+;; TODO figure out if footnote labeling would be a problem...
+
+(defun org-table-xtras-new-fn ()
+  (interactive)
+  (org-footnote-new))
+
 
 (defun org-table-xtras-print-formulas ()
   "Print the formulas at the end of the table"

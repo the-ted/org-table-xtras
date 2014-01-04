@@ -32,3 +32,32 @@
 
 #+LATEX: \end{threeparttable}
 #+LATEX: \end{table}
+
+
+* Example-2
+
+  | Column 1            | Column 2               | Column 3 | Column 4 |
+  |---------------------+------------------------+----------+----------|
+  | some formula [fn:1] | Another Formula [fn:1] |          |          |
+  |                     |                        |          |          |
+  | [fn:2]              |                        |          |          |
+  |                     |                        |          |          |
+
+* Footnotes
+
+[fn:1] Here is a footnote.
+
+[fn:2] BLAH BLAH BLAH
+
+
+
+
+
+
+
+
+
+
+
+
+

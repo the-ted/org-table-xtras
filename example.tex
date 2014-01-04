@@ -1,4 +1,4 @@
-% Created 2013-11-12 Tue 15:45
+% Created 2014-01-04 Sat 14:15
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -7,13 +7,13 @@
 \usepackage{longtable}
 \usepackage{float}
 \usepackage{wrapfig}
-\usepackage{soul}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{marvosym}
 \usepackage{wasysym}
-\usepackage{latexsym}
 \usepackage{amssymb}
-\usepackage{amstext}
 \usepackage{hyperref}
 \tolerance=1000
 \usepackage{threeparttable}
@@ -22,7 +22,7 @@
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs 24.3.1 (Org mode 8.0.3)}}
+  pdfcreator={Emacs 24.3.50.1 (Org mode 8.2.4)}}
 \begin{document}
 
 \maketitle
@@ -36,6 +36,7 @@
 \centering
 \begin{threeparttable}
 
+\begin{center}
 \begin{tabular}{rlrr}
 Time & Revenues & Costs\tnote{1} & Profit margins\tnote{2}\\
 \hline
@@ -51,6 +52,7 @@ Time & Revenues & Costs\tnote{1} & Profit margins\tnote{2}\\
 10 & 58948.69\tnote{3} & 44211.52 & 14737.17\\
 \hline
 \end{tabular}
+\end{center}
 
 \begin{tablenotes}
 \item [1] \(\$2*.75\)
@@ -60,5 +62,19 @@ Time & Revenues & Costs\tnote{1} & Profit margins\tnote{2}\\
 
 \end{threeparttable}
 \end{table}
-% Emacs 24.3.1 (Org mode 8.0.3)
+
+\section{Example-2}
+\label{sec-2}
+
+\begin{center}
+\begin{tabular}{llll}
+Column 1 & Column 2 & Column 3 & Column 4\\
+\hline
+some formula \footnotemark & Another Formula \footnotemark[1]{} &  & \\
+ &  &  & \\
+ &  &  & \\
+ &  &  & \\
+\end{tabular}
+\end{center}\footnotetext[1]{Here is a footnote.}
+% Emacs 24.3.50.1 (Org mode 8.2.4)
 \end{document}
