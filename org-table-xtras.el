@@ -1,3 +1,51 @@
+;;; org-table-xtras.el --- Some Org-Table Extras
+;;
+;; Author: Theodore Wiles
+;; Created: 2014-01-04
+;; Version: 0.5
+;; Last-Updated: 2014-01-04
+;; URL: http://github.com/theodorewiles/org-table-xtras
+;; Keywords:
+;; Compatability:
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;; Commentary:
+;;
+;; This minor mode adds some extra functionality to org-mode tables.
+;; It defines functions to copy field formulas, and also defines functions
+;; to insert footnotes describing the formulas used in each cell.
+;; Finally, it also creates a function to iterate spreadsheets using separate inputs.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;; Change Log:
+;;
+;; 0.5 Initial version
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+;;
+;;; Code:
+
+(eval-when-compile
+  (require 'cl))
+
 (setq org-latex-tables-centered nil)
 
 (setq org-calc-default-modes 
@@ -173,7 +221,7 @@
   (re-search-forward (concat "#\\+TBLNAME: +" name))
   (forward-line))
 
-(define-minor-mode org-table-xtras
+(define-minor-mode org-table-xtras-mode
   "Some Add-ins for org-table"
   :lighter " xtras"
   :keymap (let ((map (make-sparse-keymap)))
@@ -184,3 +232,5 @@
 		map))
 
 
+
+(provide 'org-table-xtras-mode)
