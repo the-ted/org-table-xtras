@@ -154,8 +154,8 @@ order."
 	 (col (org-table-xtras-get-cell-index entry :col))
 	 (row (max (org-table-xtras-get-cell-index entry :row)
 		   1))
-	 (dummy (message (int-to-string col)))
-	 (dummy (message (int-to-string row)))
+	 ;; (dummy (message (int-to-string col)))
+	 ;; (dummy (message (int-to-string row)))
 	 (oldvalue (save-excursion 
 		     ;;FIXME
 		     (previous-line (+ 3 index))
