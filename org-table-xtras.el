@@ -142,10 +142,15 @@ order."
 			      (replace-regexp-in-string expr "(\\1,\\2)"
 							(replace-regexp-in-string "\\$" "\\\\$" text)))))
 
+;; TODO: Figure out how to make all of the LaTeX code pretty-print automagically.
+
 (defun org-table-xtras-clean-entry-formula (text) 
   "Format the TEXT formula into a LaTeX-valid formula representation"
   (replace-regexp-in-string "\\$" "\\\\$" text))
 
+;; TODO: Figure out how to get the TBLNAME field to populate so we can easily
+;; delete/refresh the footnote references. See org-footnote-delete-definitions
+;; and org-footnote-delete-references, which allow for regular expressions.
 
 (defun org-table-xtras-update-table (entry index update-table)
   "Insert the correct footnote in the table"
@@ -156,22 +161,19 @@ order."
 		   1))
 	 ;; (dummy (message (int-to-string col)))
 	 ;; (dummy (message (int-to-string row)))
-	 (oldvalue (save-excursion 
-		     ;;FIXME
-		     (previous-line (+ 3 index))
-		     (replace-regexp-in-string "\\\\tnote\{[0-9]+\}" ""
-					       (org-table-get row col)))))
-    (if update-table (insert 
-		      (concat 
-		       "\\item [" strindex "] \\(" 
-		       (org-table-xtras-clean-entry-formula 
-			(cdr entry))
-		       "\\)\n")))
+	 (label (concat "TBL" strindex ))
+	 )
     (save-excursion
       ;;FIXME
       (previous-line (+ 3 index))
-      (org-table-put row col 
-		     (concat "\\(" oldvalue "\\)" "\\tnote{" strindex "}")))))
+      (org-table-goto-line row)
+      (org-table-goto-column col)
+      (org-table-end-of-field 0)
+      (insert (concat "[fn:" label "]"))
+      (if update-table
+	  (progn
+	    (org-footnote-create-definition label)
+	    (insert (org-table-xtras-clean-entry-formula (cdr entry))))))))
 
 (defun org-table-xtras-sort-formulas (x y)
   "Sort formulas by how they first occur in the table"
@@ -192,13 +194,6 @@ order."
 		(org-table-xtras-insert-formulas (car entries) (cdr entries) (+ 1 usable-index))))
 	  (org-table-xtras-update-table e usable-index t))))
 
-;; TODO figure out if footnote labeling would be a problem...
-
-(defun org-table-xtras-new-fn ()
-  (interactive)
-  (org-footnote-new))
-
-
 (defun org-table-xtras-print-formulas ()
   "Print the formulas at the end of the table"
   (interactive)
@@ -211,9 +206,8 @@ order."
 	     (end-pos (if end-search (match-end 0))))
 	  (if (and start-pos end-pos)
 	      (delete-region start-pos end-pos))
-      (insert "\\begin{tablenotes}\n")
-      (org-table-xtras-insert-formulas (car fns) (cdr fns) 1)
-      (insert "\\end{tablenotes}"))))
+      (org-table-xtras-insert-formulas (car fns) (cdr fns) 1))))
+
 
 (defun org-table-xtras-eval-table (TBLNAME ARGS OUTPUTVAR)
   "Evaluate a table (TBLNAME) with different argument inputs.
@@ -267,5 +261,7 @@ the form '((ARGNAME . VALUE))"
 		(define-key map (kbd "C-c C-= C-d") 'org-table-xtras-copy-field-diagonally)
 		(define-key map (kbd "C-c C-= C-p") 'org-table-xtras-print-formulas)
 		map))
+
+;; TODO: Hook print-formulas into the update-table process.
 
 (provide 'org-table-xtras-mode)

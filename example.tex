@@ -1,4 +1,4 @@
-% Created 2014-01-04 Sat 14:15
+% Created 2014-01-04 Sat 15:04
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -36,7 +36,6 @@
 \centering
 \begin{threeparttable}
 
-\begin{center}
 \begin{tabular}{rlrr}
 Time & Revenues & Costs\tnote{1} & Profit margins\tnote{2}\\
 \hline
@@ -52,7 +51,6 @@ Time & Revenues & Costs\tnote{1} & Profit margins\tnote{2}\\
 10 & 58948.69\tnote{3} & 44211.52 & 14737.17\\
 \hline
 \end{tabular}
-\end{center}
 
 \begin{tablenotes}
 \item [1] \(\$2*.75\)
@@ -65,16 +63,13 @@ Time & Revenues & Costs\tnote{1} & Profit margins\tnote{2}\\
 
 \section{Example-2}
 \label{sec-2}
-
-\begin{center}
-\begin{tabular}{llll}
-Column 1 & Column 2 & Column 3 & Column 4\\
+\begin{tabular}{lllr}
+Column 1 & Column 2 & Column 3 & Column 4\footnotemark\\
 \hline
-some formula \footnotemark & Another Formula \footnotemark[1]{} &  & \\
- &  &  & \\
- &  &  & \\
- &  &  & \\
-\end{tabular}
-\end{center}\footnotetext[1]{Here is a footnote.}
+some formula & Another Formula &  & 2500\\
+\(\frac{1}{2}\)\footnotemark & 1.00\footnotemark &  & 2500\\
+ & 10\footnotemark & 10\footnotemark[4]{} & 2500\\
+ &  &  & 2500\\
+\end{tabular}\footnotetext[1]{2500}\footnotetext[2]{\(\frac{1}{2}\)}\footnotetext[3]{\(\frac{\sqrt{2}}{\sqrt{2}}\)}\footnotetext[4]{10}
 % Emacs 24.3.50.1 (Org mode 8.2.4)
 \end{document}

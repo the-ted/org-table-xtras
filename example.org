@@ -36,28 +36,28 @@
 
 * Example-2
 
-  | Column 1            | Column 2               | Column 3 | Column 4 |
-  |---------------------+------------------------+----------+----------|
-  | some formula [fn:1] | Another Formula [fn:1] |          |          |
-  |                     |                        |          |          |
-  | [fn:2]              |                        |          |          |
-  |                     |                        |          |          |
+#+TBLNAME: EX2
+  | Column 1                 | Column 2        | Column 3    | Column 4[fn:TBL2] |
+  |--------------------------+-----------------+-------------+-------------------|
+  | some formula             | Another Formula |             |              2500 |
+  | \(\frac{1}{2}\)[fn:TBL3] | 1.00[fn:TBL4]   |             |              2500 |
+  |                          | 10[fn:TBL1]     | 10[fn:TBL1] |              2500 |
+  |                          |                 |             |              2500 |
+  #+TBLFM: $4=2500::@3$1=\frac{1}{2}::@3$2=\frac{\sqrt{2}}{\sqrt{2}}::@4$2=10::@4$3=10
+
+
 
 * Footnotes
 
-[fn:1] Here is a footnote.
+[fn:TBL1] 10
 
-[fn:2] BLAH BLAH BLAH
+[fn:TBL2] 2500
 
+[fn:TBL3] \(\frac{1}{2}\)
 
-
-
-
-
+[fn:TBL4] \(\frac{\sqrt{2}}{\sqrt{2}}\)
 
 
-
-
-
+  
 
 
