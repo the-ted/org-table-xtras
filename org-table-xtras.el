@@ -1,4 +1,4 @@
-;;; org-table-xtras.el --- Some Org-Table Extras
+;;; org-table-xtras.el --- Some Add-ins for org-table
 ;;
 ;; Author: Theodore Wiles
 ;; Created: 2014-01-04
@@ -93,19 +93,28 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 	  (org-table-xtras-copy-formula (- n 1) type negative?)))))
 
 (defun org-table-xtras-copy-field-next-row (&optional a)
-  "Copy a field's formula or value to the next row. A prefix argument determines how many successive times the formula or value is added. Negative prefix values copy in the reverse order."
+  "Copy a field's formula or value to the next row. A prefix
+argument determines how many successive times the formula or
+value is added. Negative prefix values copy in the reverse
+order."
   (interactive "p")
   (let ((b (if (not a) 0 a)))
     (org-table-xtras-copy-formula (abs b) :row (if (< b 0) t))))
 
 (defun org-table-xtras-copy-field-next-column (&optional a)
-  "Copy a field's formula or value to the next column. A prefix argument determines how many successive times the formula or value is added. Negative prefix values copy in the reverse order."
+  "Copy a field's formula or value to the next column. A prefix
+argument determines how many successive times the formula or
+value is added. Negative prefix values copy in the reverse
+order."
   (interactive "P")
   (let ((b (if (eq a nil) 0 a)))
     (org-table-xtras-copy-formula (abs b) :col (if (< b 0) t))))
 
 (defun org-table-xtras-copy-field-diagonally (&optional a)
-  "Copy a field's formula or value to the next diagonal. A prefix argument determines how many successive times the formula or value is added. Negative prefix values copy in the reverse order."
+  "Copy a field's formula or value to the next diagonal. A prefix
+argument determines how many successive times the formula or
+value is added. Negative prefix values copy in the reverse
+order."
   (interactive "P")
   (let ((b (if (eq a nil) 0 a)))
     (org-table-xtras-copy-formula (abs b) :diag (if (< b 0) t))))
@@ -113,6 +122,7 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 
 
 (defun org-table-xtras-get-cell-index (entry type)
+  "Return the :row or :col (based on TYPE) index of ENTRY"
   (let* ((row-expr "[\\.@]\\([0-9]+\\)")
 	 (col-expr "\\$\\([0-9]+\\)")
 	 (expr "[\\.@]\\([0-9]+\\)\\$\\([0-9]+\\)")
@@ -124,7 +134,8 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 	(if (eq type :col) (string-to-int format-formula)
 	  0)))))
 
-(defun org-table-xtras-clean-entry-formula (text)
+(defun org-table-xtras-clean-entry-formula-old (text)
+  "Format the TEXT formula into a LaTeX-valid formula representation"
   (let* ((expr "[\\.@]\\([0-9-]+\\)\\$\\(-?[0-9]+\\)")
 	 (expr-2 "\\$\\(-?[0-9]+\\)"))
     (replace-regexp-in-string expr-2 "\\\\$\\1" 
@@ -132,10 +143,12 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 							(replace-regexp-in-string "\\$" "\\\\$" text)))))
 
 (defun org-table-xtras-clean-entry-formula (text) 
+  "Format the TEXT formula into a LaTeX-valid formula representation"
   (replace-regexp-in-string "\\$" "\\\\$" text))
 
 
 (defun org-table-xtras-update-table (entry index update-table)
+  "Insert the correct footnote in the table"
   (let* (
 	 (strindex (int-to-string index))
 	 (col (org-table-xtras-get-cell-index entry :col))
@@ -148,9 +161,12 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 		     (previous-line (+ 3 index))
 		     (replace-regexp-in-string "\\\\tnote\{[0-9]+\}" ""
 					       (org-table-get row col)))))
-    (if update-table (insert (concat "\\item [" strindex "] \\(" (org-table-xtras-clean-entry-formula 
-								  (cdr entry))
-				     "\\)\n")))
+    (if update-table (insert 
+		      (concat 
+		       "\\item [" strindex "] \\(" 
+		       (org-table-xtras-clean-entry-formula 
+			(cdr entry))
+		       "\\)\n")))
     (save-excursion
       ;;FIXME
       (previous-line (+ 3 index))
@@ -158,9 +174,11 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 		     (concat "\\(" oldvalue "\\)" "\\tnote{" strindex "}")))))
 
 (defun org-table-xtras-sort-formulas (x y)
+  "Sort formulas by how they first occur in the table"
   (string< (cdr x) (cdr y)))
 
 (defun org-table-xtras-insert-formulas (e entries index)
+  "Iterate through the available formulas, inserting them at point."
       (let* ((form1 (cdr e))
 	     (form2 (cdr (first entries)))
 	     (usable-index (if (eq nil index) 1 index)))
@@ -175,6 +193,7 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 	  (org-table-xtras-update-table e usable-index t))))
 
 (defun org-table-xtras-print-formulas ()
+  "Print the formulas at the end of the table"
   (interactive)
   (let* ((fns (sort* (org-table-get-stored-formulas) 'org-table-xtras-sort-formulas)))
       (goto-char (org-table-end))
@@ -190,6 +209,12 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
       (insert "\\end{tablenotes}"))))
 
 (defun org-table-xtras-eval-table (TBLNAME ARGS OUTPUTVAR)
+  "Evaluate a table (TBLNAME) with different argument inputs.
+
+ARGS is a list of parameter changes, in the form '((ARGNAME . VALUE)), 
+
+OUTPUTVAR is the name of the parameter that you want to return."
+
   (save-excursion
     (org-table-xtras-go-to-table TBLNAME)
     (let* ((beg (org-table-begin))
@@ -211,6 +236,8 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 	(message (substring-no-properties (org-table-get-constant OUTPUTVAR)))))))
 
 (defun org-table-xtras-replace-param (item)
+  "Replace a parameter in a table with a new value. ITEM takes
+the form '((ARGNAME . VALUE))"
   (let* ((param (car item))
 	 (value (cdr item)))
     (save-excursion
@@ -219,6 +246,7 @@ right-to-left or down-to-up instead, set NEGATIVE? to t."
 	(replace-match (concat param "=" value "|"))))))
 	       
 (defun org-table-xtras-go-to-table (name)
+  "Go to the table given by NAME"
   (goto-char (point-min))
   (re-search-forward (concat "#\\+TBLNAME: +" name))
   (forward-line))
