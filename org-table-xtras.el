@@ -56,7 +56,7 @@
  calc-symbolic-mode nil 
  calc-date-format (YYYY "-" MM "-" DD " " Www (" " hh ":" mm)) 
  calc-display-working-message t 
- calc-language latex))
+ calc-language nil))
 
 (defun org-table-xtras-copy-formula (n type &optional negative?)
   "Copy a formula N times, either across a :row, :column,
@@ -148,9 +148,6 @@ order."
   "Format the TEXT formula into a LaTeX-valid formula representation"
   (replace-regexp-in-string "\\$" "\\\\$" text))
 
-;; TODO: Figure out how to get the TBLNAME field to populate so we can easily
-;; delete/refresh the footnote references. See org-footnote-delete-definitions
-;; and org-footnote-delete-references, which allow for regular expressions.
 
 (defun org-table-xtras-update-table (entry index update-table)
   "Insert the correct footnote in the table"
@@ -161,15 +158,13 @@ order."
 		   1))
 	 ;; (dummy (message (int-to-string col)))
 	 ;; (dummy (message (int-to-string row)))
-	 (label (concat "TBL" strindex ))
+	 (label (concat (org-table-xtras-tbl-name) strindex ))
 	 )
     (save-excursion
-      ;;FIXME
-      (previous-line (+ 3 index))
       (org-table-goto-line row)
       (org-table-goto-column col)
       (org-table-end-of-field 0)
-      (insert (concat "[fn:" label "]"))
+      (insert (concat " [fn:" label "]"))
       (if update-table
 	  (progn
 	    (org-footnote-create-definition label)
@@ -194,20 +189,40 @@ order."
 		(org-table-xtras-insert-formulas (car entries) (cdr entries) (+ 1 usable-index))))
 	  (org-table-xtras-update-table e usable-index t))))
 
+
+(defun org-xtras-footnote-delete-definitions (label)
+  "Delete every definition of the footnote LABEL. LABEL can be a regexp.
+Return the number of footnotes removed."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((def-re (concat "^\\[" label "\\]"))
+	  (ndef 0))
+      (while (re-search-forward def-re nil t)
+	(let ((full-def (org-footnote-at-definition-p)))
+	  (when full-def
+	    ;; Remove the footnote, and all blank lines before it.
+	    (goto-char (nth 1 full-def))
+	    (skip-chars-backward " \r\t\n")
+	    (unless (bolp) (forward-line))
+	    (delete-region (point) (nth 2 full-def))
+	    (incf ndef))))
+      ndef)))
+
+
+(defun org-table-extras-remove-fns ()
+  (interactive)
+  (goto-char (org-table-begin))
+  (org-xtras-footnote-delete-definitions (concat "fn:" (org-table-xtras-tbl-name) "[0-9]*"))
+  (while (>
+	  (org-footnote-delete-references (concat "fn:" (org-table-xtras-tbl-name) "[0-9]+")) 0)
+    (org-footnote-delete-references (concat "fn:" (org-table-xtras-tbl-name) "[0-9]+"))))
+
 (defun org-table-xtras-print-formulas ()
   "Print the formulas at the end of the table"
   (interactive)
   (let* ((fns (sort* (org-table-get-stored-formulas) 'org-table-xtras-sort-formulas)))
-      (goto-char (org-table-end))
-      (next-line 2)
-      (let* ((start-search (looking-at "\\\\begin\{tablenotes\}.*"))
-	     (start-pos (if start-search (match-beginning 0)))
-	     (end-search (if start-search (re-search-forward "\\\\end\{tablenotes\}.*" nil t nil)))
-	     (end-pos (if end-search (match-end 0))))
-	  (if (and start-pos end-pos)
-	      (delete-region start-pos end-pos))
-      (org-table-xtras-insert-formulas (car fns) (cdr fns) 1))))
-
+    (org-table-extras-remove-fns)
+    (org-table-xtras-insert-formulas (car fns) (cdr fns) 1)))
 
 (defun org-table-xtras-eval-table (TBLNAME ARGS OUTPUTVAR)
   "Evaluate a table (TBLNAME) with different argument inputs.
@@ -251,6 +266,22 @@ the form '((ARGNAME . VALUE))"
   (goto-char (point-min))
   (re-search-forward (concat "#\\+TBLNAME: +" name))
   (forward-line))
+
+(defun org-table-xtras-tbl-name ()
+  "Return the name of the current table, or prompt for one if none exists."
+  (interactive)
+  (save-excursion
+    (goto-char (org-table-begin))
+    (let ((pos (re-search-backward "#\\+TBLNAME: +\\([A-z]+ *$\\)"
+				   (line-end-position -1) t)))
+      (if pos
+	  (match-string 1)
+	(progn
+	  (previous-line)
+	  (insert (concat
+		   "\n#+TBLNAME: "
+		   (read-from-minibuffer "No TBLNAME found. Insert new TBLNAME, only letters allowed:")
+		   )))))))
 
 (define-minor-mode org-table-xtras-mode
   "Some Add-ins for org-table"

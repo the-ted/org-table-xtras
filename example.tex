@@ -1,4 +1,4 @@
-% Created 2014-01-04 Sat 15:04
+% Created 2014-01-04 Sat 21:16
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -16,7 +16,7 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \tolerance=1000
-\usepackage{threeparttable}
+\author{Ted Wiles}
 \date{\today}
 \title{example}
 \hypersetup{
@@ -32,44 +32,28 @@
 \label{sec-1}
 
 
-\begin{table}
-\centering
-\begin{threeparttable}
-
-\begin{tabular}{rlrr}
-Time & Revenues & Costs\tnote{1} & Profit margins\tnote{2}\\
+\begin{tabular}{llrr}
+A & B & C \footnotemark & D \footnotemark\\
 \hline
-1 & 25000.00 & 18750.00 & 6250.00\\
-2 & 27500.00\tnote{3} & 20625.00 & 6875.00\\
-3 & 30250.00\tnote{3} & 22687.50 & 7562.50\\
-4 & 33275.00\tnote{3} & 24956.25 & 8318.75\\
-5 & 36602.50\tnote{3} & 27451.88 & 9150.62\\
-6 & 40262.75\tnote{3} & 30197.06 & 10065.69\\
-7 & 44289.03\tnote{3} & 33216.77 & 11072.26\\
-8 & 48717.93\tnote{3} & 36538.45 & 12179.48\\
-9 & 53589.72\tnote{3} & 40192.29 & 13397.43\\
-10 & 58948.69\tnote{3} & 44211.52 & 14737.17\\
+230498.10 \footnotemark & 0.06 \footnotemark & 230498.16 & 0.24\\
+1203948501 & .08 & 1203948501.08 & 0.28\\
+\end{tabular}\footnotetext[1]{\$2+\$1}\footnotetext[2]{sqrt(\$2)}\footnotetext[3]{.10+230498}\footnotetext[4]{2/35}
+
+
+Another Table:
+
+\begin{tabular}{lrllr}
+ & Year & Sales & COGS & Gross Margin \footnotemark\\
 \hline
-\end{tabular}
-
-\begin{tablenotes}
-\item [1] \(\$2*.75\)
-\item [2] \(\$2-\$3\)
-\item [3] \((-1,0)*1.10\)
-\end{tablenotes}
-
-\end{threeparttable}
-\end{table}
-
-\section{Example-2}
-\label{sec-2}
-\begin{tabular}{lllr}
-Column 1 & Column 2 & Column 3 & Column 4\footnotemark\\
-\hline
-some formula & Another Formula &  & 2500\\
-\(\frac{1}{2}\)\footnotemark & 1.00\footnotemark &  & 2500\\
- & 10\footnotemark & 10\footnotemark[4]{} & 2500\\
- &  &  & 2500\\
-\end{tabular}\footnotetext[1]{2500}\footnotetext[2]{\(\frac{1}{2}\)}\footnotetext[3]{\(\frac{\sqrt{2}}{\sqrt{2}}\)}\footnotetext[4]{10}
+ & 2012 & 1.04 & .75 & 0.29\\
+ & 2013 & 1.06 & .80 & 0.26\\
+ & 2014 & 1.08 & 0.85 & 0.23\\
+ & 2015 & 1.10 \footnotemark & 0.91 \footnotemark[6]{} & 0.19\\
+ & 2016 & 1.12 \footnotemark[6]{} & 0.97 \footnotemark[6]{} & 0.15\\
+ & 2017 & 1.14 \footnotemark[6]{} & 1.03 \footnotemark[6]{} & 0.11\\
+ & 2018 & 1.16 \footnotemark[6]{} & 1.10 \footnotemark[6]{} & 0.06\\
+ & 2019 & 1.18 \footnotemark[6]{} & 1.17 \footnotemark[6]{} & 0.01\\
+ & 2020 & 1.20 \footnotemark[6]{} & 1.24 \footnotemark[6]{} & -0.05\\
+\end{tabular}\footnotetext[5]{\$Sales-\$COGS}\footnotetext[6]{@-1*(1+(@4-@3)/@3)}
 % Emacs 24.3.50.1 (Org mode 8.2.4)
 \end{document}
