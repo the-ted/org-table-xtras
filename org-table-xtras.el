@@ -296,4 +296,4 @@ the form '((ARGNAME . VALUE))"
 		(define-key map (kbd "C-c C-= C-r") 'org-table-xtras-remove-fns)
 		map))
 
-(provide 'org-table-xtras-mode)
+(provide 'org-table-xtras)

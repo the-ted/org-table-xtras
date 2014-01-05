@@ -1,8 +1,14 @@
 * org-table-xtras
 
-  This emacs minor mode adds some extra functionality to org-mode tables. It's a bit hacked together at the moment. 
+  This emacs minor mode adds some extra functionality to org-mode tables. 
 
-  To use, just put the .el file in your load-path and load the minor mode via 
+  To use, put the .el file in your load path, along with 
+
+#+BEGIN_SRC 
+(require 'org-table-xtras)
+#+END_SRC
+
+  Then issue
 
 #+BEGIN_SRC 
 M-x org-table-xtras
