@@ -216,6 +216,7 @@ ARGS is a list of parameter changes, in the form '((ARGNAME . VALUE)),
 
 OUTPUTVAR is the name of the parameter that you want to return."
 
+  (org-table-xtras-mode)
   (save-excursion
     (org-table-xtras-go-to-table TBLNAME)
     (let* ((beg (org-table-begin))
@@ -229,12 +230,17 @@ OUTPUTVAR is the name of the parameter that you want to return."
 	(switch-to-buffer (current-buffer) nil t)
 	(insert-buffer-substring buf beg end)
 	(org-mode)
+	(org-table-xtras-mode)	
 	(goto-char 1)
 	(forward-line)
 	(dolist (item ARGS)
 	  (org-table-xtras-replace-param item))
-	(org-table-iterate)
+	(dotimes (i 4)
+	  (org-table-recalculate '(4) t))
 	(message (substring-no-properties (org-table-get-constant OUTPUTVAR)))))))
+
+
+
 
 (defun org-table-xtras-replace-param (item)
   "Replace a parameter in a table with a new value. ITEM takes

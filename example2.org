@@ -1,35 +1,28 @@
-#+DATE: <2014-01-05 Sun>
-#+OPTIONS: texht:t toc:nil
-#+LATEX_CLASS: article
-#+LATEX_CLASS_OPTIONS:
-#+LATEX_HEADER:
-#+LATEX_HEADER_EXTRA:
-
-* Example 2
+* An Example - a DCF Calculation.
 
 #+CAPTION: DCF
 #+TBLNAME: DCF
-|   |     Year |    Growth |     Cash | Discounted Cash |
-|---+----------+-----------+----------+-----------------|
-| # |        0 |      0.03 |      500 |             500 |
-| # |        1 |      0.15 |   575.00 |          527.52 |
-| # |        2 |      0.15 |   661.25 |          556.56 |
-| # |        3 |      0.15 |   760.44 |          587.20 |
-| # |        4 |      0.15 |   874.51 |          619.52 |
-| # |        5 |      0.15 |  1005.69 |          653.63 |
-| # |        6 |      0.05 |  1055.97 |          629.64 |
-| # |        7 |      0.05 |  1108.77 |          606.54 |
-| # |        8 |      0.05 |  1164.21 |          584.28 |
-| # |        9 |      0.05 |  1222.42 |          562.84 |
-| # |       10 |      0.05 |  1283.54 |          542.18 |
-| # |       10 |      0.03 | 22034.10 |         9307.44 |
-|   |          |      0.05 |        1 |        15677.35 |
-| ^ |          |           |     Cash |             DCF |
-| $ | g1t5=.15 | g6t10=.05 |          |                 |
-| $ |  COE=.09 |     g=.03 |          |                 |
-|---+----------+-----------+----------+-----------------|
-|   |     COE= |      0.09 |          |                 |
-|   |       g= |      0.03 |          |                 |
+|   |     Year | Growth Rate |     Cash | Discounted Cash |
+|---+----------+-------------+----------+-----------------|
+| # |        0 |        0.03 |      500 |             500 |
+| # |        1 |        0.15 |   575.00 |          527.52 |
+| # |        2 |        0.15 |   661.25 |          556.56 |
+| # |        3 |        0.15 |   760.44 |          587.20 |
+| # |        4 |        0.15 |   874.51 |          619.52 |
+| # |        5 |        0.15 |  1005.69 |          653.63 |
+| # |        6 |        0.05 |  1055.97 |          629.64 |
+| # |        7 |        0.05 |  1108.77 |          606.54 |
+| # |        8 |        0.05 |  1164.21 |          584.28 |
+| # |        9 |        0.05 |  1222.42 |          562.84 |
+| # |       10 |        0.05 |  1283.54 |          542.18 |
+| # |       10 |        0.03 | 22034.10 |         9307.44 |
+|   |          |        0.05 |        1 |        15677.35 |
+| ^ |          |             |     Cash |             DCF |
+| $ | g1t5=.15 |   g6t10=.05 |          |                 |
+| $ |  COE=.09 |       g=.03 |          |                 |
+|---+----------+-------------+----------+-----------------|
+|   |     COE= |        0.09 |          |                 |
+|   |       g= |        0.03 |          |                 |
 #+TBLFM: $3=$g::@3$3=$g1t5::@3$4=@-1*(1+$-1)::@3$5=$-1*(1/(1+$COE)^($-3))::@4$3=$g1t5::@4$4=@-1*(1+$-1)::@4$5=$-1*(1/(1+$COE)^($-3))::@5$3=$g1t5::@5$4=@-1*(1+$-1)::@5$5=$-1*(1/(1+$COE)^($-3))::@6$3=$g1t5::@6$4=@-1*(1+$-1)::@6$5=$-1*(1/(1+$COE)^($-3))::@7$3=$g1t5::@7$4=@-1*(1+$-1)::@7$5=$-1*(1/(1+$COE)^($-3))::@8$3=$g6t10::@8$4=@-1*(1+$-1)::@8$5=$-1*(1/(1+$COE)^($-3))::@9$3=$g6t10::@9$4=@-1*(1+$-1)::@9$5=$-1*(1/(1+$COE)^($-3))::@10$3=$g6t10::@10$4=@-1*(1+$-1)::@10$5=$-1*(1/(1+$COE)^($-3))::@11$3=$g6t10::@11$4=@-1*(1+$-1)::@11$5=$-1*(1/(1+$COE)^($-3))::@12$3=$g6t10::@12$4=@-1*(1+$-1)::@12$5=$-1*(1/(1+$COE)^($-3))::@13$4=(@-1(1+$g))/($COE-$g)::@13$5=$-1*(1/(1+$COE)^($-3))::@14$4=1::@14$5=vsum(@2..@-1)::@18$3=$COE::@19$3=$g
 
 #+CAPTION: Scenario Manager
@@ -47,4 +40,159 @@
 | .12 | 10298.65 |
 #+TBLFM: $2='(org-table-xtras-eval-table "DCF" '(("COE" . $1)) "DCF")
 
+* Another Example - Simulating FOMC distributions		   
+
+#+CAPTION: Economic Projections of FOMC Members, September 2013
+#+TBLNAME: GDPProjections
+|     Year | CT-Lower [fn:1] [fn:2] | CT-Upper [fn:1] | Range-Lower [fn:1] [fn:3] | Range-Upper [fn:1] [fn:3] |
+|----------+------------------------+-----------------+---------------------------+---------------------------|
+|     2013 |                    2.2 |             2.3 |                       2.2 |                       2.4 |
+|     2014 |                    2.8 |             3.2 |                       2.2 |                       3.3 |
+|     2015 |                    3.0 |             3.4 |                       2.2 |                       3.6 |
+|     2016 |                    2.5 |             3.2 |                       2.1 |                       3.5 |
+| Long Run |                    2.2 |             2.4 |                       1.8 |                       2.5 |
+
+I want to try and draw from this distribution of FOMC participants.
+
+First, let's assume that the projections are uniform within each CLT range (e.g. the projections occur uniformly between 2.8 and 3.2 in 2014).
+
+There are three more observations occuring somewhere between the lower range bound and the lower central tendency bound, three more observations occuring somewhere between the upper range bound and the upper central tendency bound, and there are 19 observations in total.
+
+So, we can assume that each true value has a 3/19 chance of landing in the lower region, 3/19 chance of landing in the upper region, and 13/19 change of landing in the middle region, and, a uniform distribution within each of these regions:
+
+#+TBLNAME: Sample
+| $ | year=2013      |       |
+| $ | CTLOW=2.2      |       |
+| $ | CTHIGH=2.3     |       |
+| $ | RANGELOW=2.2   |       |
+| $ | RANGEHIGH=2.4  |       |
+|   | Year           |  2013 |
+|---+----------------+-------|
+|   | CT-Lower       |  2.20 |
+|   | CT-Higher      |  2.30 |
+|   | Range-Lower    |  2.20 |
+|   | Range-Upper    |  2.40 |
+|---+----------------+-------|
+|   | Seed 1         |  0.82 |
+|   | Seed 2         |  0.64 |
+|   | Simulated Draw | 2.364 |
+| ^ |                |   Sim |
+#+TBLFM: @7$3=$CTLOW::@8$3=$CTHIGH::@9$3=$RANGELOW::@10$3=$RANGEHIGH::@11$3=random(1.0)::@12$3=random(1.0)::@13$3='(tw-distribution @-2 @-1 "$RANGELOW" "$RANGEHIGH" "$CTLOW" "$CTHIGH")
+
+** Simulation Columns						   :noexport:
+
+#+PLOT: script:"~/org-table-xtras/example2-gnuplot.gp"
+#+TBLNAME: SimulationColumns
+| 2013 | 2014 | 2015 | 2016 |
+|------+------+------+------|
+| 2.31 | 3.02 | 3.00 | 2.97 |
+| 2.20 | 3.06 | 3.30 | 2.70 |
+| 2.21 | 3.25 | 3.06 | 3.06 |
+| 2.21 | 2.82 | 3.12 | 2.90 |
+| 2.36 | 2.90 | 3.16 | 2.54 |
+| 2.21 | 3.17 | 3.01 | 2.78 |
+| 2.39 | 3.13 | 3.24 | 2.72 |
+| 2.20 | 2.36 | 3.20 | 3.19 |
+| 2.20 | 2.88 | 3.04 | 2.45 |
+| 2.25 | 3.27 | 3.25 | 2.64 |
+| 2.25 | 3.18 | 2.65 | 2.97 |
+| 2.27 | 3.12 | 3.06 | 2.12 |
+| 2.27 | 3.29 | 3.60 | 2.94 |
+| 2.22 | 3.04 | 2.56 | 2.31 |
+| 2.26 | 2.77 | 3.14 | 2.36 |
+| 2.26 | 3.14 | 3.19 | 3.06 |
+| 2.20 | 3.30 | 3.38 | 2.50 |
+| 2.35 | 3.30 | 3.16 | 2.56 |
+| 2.29 | 2.91 | 3.59 | 2.20 |
+| 2.33 | 3.19 | 2.90 | 2.88 |
+| 2.26 | 2.58 | 2.80 | 3.41 |
+| 2.20 | 3.10 | 3.50 | 3.28 |
+| 2.28 | 2.88 | 3.40 | 2.40 |
+| 2.20 | 2.95 | 2.94 | 2.95 |
+| 2.24 | 3.03 | 3.37 | 2.24 |
+| 2.28 | 3.28 | 2.89 | 2.12 |
+| 2.29 | 3.25 | 3.18 | 2.20 |
+| 2.33 | 2.61 | 3.30 | 2.94 |
+| 2.36 | 2.30 | 3.24 | 2.58 |
+| 2.20 | 2.97 | 3.12 | 3.24 |
+| 2.37 | 3.26 | 2.91 | 3.18 |
+| 2.22 | 3.12 | 3.10 | 2.92 |
+| 2.22 | 2.90 | 3.47 | 2.77 |
+| 2.26 | 2.91 | 3.15 | 3.41 |
+| 2.23 | 3.16 | 3.51 | 2.19 |
+| 2.21 | 3.21 | 3.01 | 2.96 |
+| 2.25 | 2.28 | 3.32 | 3.10 |
+| 2.37 | 3.16 | 3.11 | 3.03 |
+| 2.27 | 3.15 | 2.58 | 3.10 |
+| 2.25 | 3.08 | 3.21 | 2.83 |
+| 2.25 | 3.21 | 3.42 | 2.91 |
+| 2.22 | 2.26 | 3.27 | 3.10 |
+| 2.32 | 2.22 | 3.28 | 2.91 |
+| 2.34 | 3.05 | 3.58 | 3.10 |
+| 2.30 | 2.43 | 3.56 | 2.77 |
+| 2.29 | 3.17 | 3.17 | 2.40 |
+| 2.38 | 2.90 | 2.61 | 3.17 |
+| 2.30 | 3.01 | 3.38 | 2.92 |
+| 2.28 | 2.73 | 3.07 | 3.13 |
+| 2.21 | 2.69 | 3.03 | 3.37 |
+| 2.29 | 2.83 | 3.50 | 3.09 |
+| 2.28 | 3.00 | 2.77 | 3.40 |
+| 2.21 | 3.12 | 3.18 | 2.84 |
+| 2.20 | 2.86 | 3.31 | 3.10 |
+| 2.22 | 2.34 | 2.20 | 2.22 |
+| 2.25 | 3.00 | 3.40 | 2.72 |
+| 2.26 | 3.24 | 2.28 | 3.18 |
+| 2.40 | 3.05 | 2.50 | 2.52 |
+| 2.20 | 3.07 | 2.84 | 2.79 |
+| 2.25 | 2.96 | 3.38 | 2.48 |
+#+TBLFM: $1='(eval-table-list "2013")::$2='(eval-table-list "2014")::$3='(eval-table-list "2015")::$4='(eval-table-list "2016")
+
+** Simulated Distribution
+   
+   Figure \ref{fig:Sim} shows the results of drawing a 60-observation sample from these distributions gives the following cumulative density plots 
+
+#+CAPTION: Simulated Distribution of FOMC predictions.
+#+NAME: fig:Sim
+[[./example2.png]]
+
+* Appendix: Lisp code
+
+  There are three lisp code functions I used in this org-mode file. The first, =tw-distribution= draws the FOMC distribution as the combination of three uniform distrubions. GDP-ref gets remote ranges from the =GDPProjections= table. I coded it in lisp to save space in the TBLFM line. Similarly, =eval-table-list= evaluates the simulation spreadsheets with some given arguments. I had to write this function in order to perform the =gdp-ref= lookup before =org-table-xtras-eval-table= was evaluated.
+
+#+BEGIN_SRC elisp :results nil :exports code
+(defun tw-distribution (r1 r2 rangelow rangehigh ctlow cthigh)
+  (let ((rangehigh (string-to-int rangehigh))
+        (rangelow (string-to-int rangelow))
+        (ctlow (string-to-int ctlow))
+        (cthigh (string-to-int cthigh))
+        (r1 (string-to-int r1))
+        (r2 (string-to-int r2)))
+  (cond ((> r1 (/ 16 19)) (+ cthigh (* r2 (- rangehigh cthigh))))
+        ((< r1 (/ 3 19))  (+ rangelow (* r2 (- ctlow rangelow))))
+        (t (+ ctlow (* r2 (- cthigh ctlow)))))))
+
+(defun gdp-ref (val col)
+  (org-lookup-first 
+    val
+    (org-table-get-remote-range "GDPProjections" "@2$1..@>$1")
+    (org-table-get-remote-range "GDPProjections" (concat  "@2$" col "..@>$" col))))
+
+(defun eval-table-list (year)
+  (let ((arglist (list (cons "year" year)
+		       (cons "CTLOW" (gdp-ref year "2"))
+		       (cons "CTHIGH" (gdp-ref year "3"))
+		       (cons "RANGELOW" (gdp-ref year "4"))
+		       (cons "RANGEHIGH" (gdp-ref year "5")))))
+    (princ arglist)
+    (org-table-xtras-eval-table "Sample" arglist "Sim")))
+
+#+END_SRC
+
+
 * Footnotes
+
+[fn:1] http://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20131218.pdf
+
+[fn:2] The central tendency excludes the three highest and three lowest projections for each variable in each year.
+
+[fn:3]  The range for a variable in a given year includes all participants’ projections, from lowest to highest, for that variable in that year.
