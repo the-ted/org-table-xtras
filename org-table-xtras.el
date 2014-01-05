@@ -157,7 +157,7 @@ order."
 		   1))
 	 ;; (dummy (message (int-to-string col)))
 	 ;; (dummy (message (int-to-string row)))
-	 (label (concat (org-table-xtras-tbl-name) strindex ))
+	 (label (concat (org-table-xtras-tbl-name) "--" strindex ))
 	 )
     (save-excursion
       (if (and (org-table-goto-line row) (<= col org-table-current-ncol))
@@ -214,10 +214,10 @@ Return the number of footnotes removed."
 (defun org-table-extras-remove-fns ()
   (interactive)
   (goto-char (org-table-begin))
-  (org-xtras-footnote-delete-definitions (concat "fn:" (org-table-xtras-tbl-name) "[0-9]*"))
+  (org-xtras-footnote-delete-definitions (concat "fn:" (org-table-xtras-tbl-name) "--[0-9]*"))
   (while (>
-	  (org-footnote-delete-references (concat "fn:" (org-table-xtras-tbl-name) "[0-9]+")) 0)
-    (org-footnote-delete-references (concat "fn:" (org-table-xtras-tbl-name) "[0-9]+"))))
+	  (org-footnote-delete-references (concat "fn:" (org-table-xtras-tbl-name) "--[0-9]+")) 0)
+    (org-footnote-delete-references (concat "fn:" (org-table-xtras-tbl-name) "--[0-9]+"))))
 
 (defun org-table-xtras-print-formulas ()
   "Print the formulas at the end of the table"
@@ -274,7 +274,7 @@ the form '((ARGNAME . VALUE))"
   (interactive)
   (save-excursion
     (goto-char (org-table-begin))
-    (let ((pos (re-search-backward "#\\+TBLNAME: +\\([A-z]+ *$\\)"
+    (let ((pos (re-search-backward "#\\+TBLNAME: +\\([A-z0-9]+ *$\\)"
 				   (line-end-position -1) t)))
       (if pos
 	  (match-string 1)
@@ -282,7 +282,7 @@ the form '((ARGNAME . VALUE))"
 	  (previous-line)
 	  (insert (concat
 		   "\n#+TBLNAME: "
-		   (read-from-minibuffer "No TBLNAME found. Insert new TBLNAME, only letters allowed:")
+		   (read-from-minibuffer "No TBLNAME found. Insert new TBLNAME:")
 		   )))))))
 
 (define-minor-mode org-table-xtras-mode
