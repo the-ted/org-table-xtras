@@ -155,6 +155,8 @@ So, we can assume that each true value has a 3/19 chance of landing in the lower
 #+NAME: fig:Sim
 [[./example2.png]]
 
+My takeaway from this exercise is that sometimes, just writing a function directly is much easier. Using the spreadsheet functionality is most useful when you want to visualize how data flows through the program.
+
 * Appendix: Lisp code
 
   There are three lisp code functions I used in this org-mode file. The first, =tw-distribution= draws the FOMC distribution as the combination of three uniform distrubions. GDP-ref gets remote ranges from the =GDPProjections= table. I coded it in lisp to save space in the TBLFM line. Similarly, =eval-table-list= evaluates the simulation spreadsheets with some given arguments. I had to write this function in order to perform the =gdp-ref= lookup before =org-table-xtras-eval-table= was evaluated.
