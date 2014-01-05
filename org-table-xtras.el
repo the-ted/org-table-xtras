@@ -45,8 +45,6 @@
 ;; the following in your .emacs:
 ;; (add-hook 'org-export-before-parsing-hook 'org-table-xtras-export-hook)
 ;;
-;;
-;;
 ;;; Code:
 
 (eval-when-compile
@@ -131,7 +129,8 @@ order."
 
 (defun org-table-xtras-clean-entry-formula (text) 
   "Format the TEXT formula into a nice-looking formula representation"
-  (replace-regexp-in-string "\\$" "\\\\$" text))
+  (concat "=" (replace-regexp-in-string "'" "`" text) "="))
+;;  (replace-regexp-in-string "\\$" "!" text)
 
 (defun org-table-xtras-update-table (entry index update-table)
   "Insert the correct footnote in the table"
@@ -271,16 +270,20 @@ the form '((ARGNAME . VALUE))"
 
 (defun org-table-xtras-run-print-formulas ()
   "Do org-table-xtras-print-formulas on all of the named tables in the exported file."
+  (interactive)
   (let ((search (re-search-forward "#\\+TBLNAME: +\\([A-z0-9]+ *$\\)" nil t)))
-    (next-line)
-    (org-table-xtras-print-formulas)
-    search))
+    (if search
+	(progn
+	  (goto-char (org-table-begin))
+	  (org-table-xtras-print-formulas)
+	  t)
+      nil)))
 
 (defun org-table-xtras-export-hook (backend)
   "A hook that will populate all of the tables with footnotes for export only."
   (goto-char (point-min))
   (while (org-table-xtras-run-print-formulas)
-    (org-table-xtras-run-print-formulas)))
+    t))
 
 (define-minor-mode org-table-xtras-mode
   "Some Add-ins for org-table"
