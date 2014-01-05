@@ -1,6 +1,6 @@
 * org-table-xtras
 
-  This emacs minor mode adds some extra functionality to org-mode tables. It's a bit hacked together at the moment. Note that it edits some variables, such as *org-latex-tables-centered* and *org-calc-default-modes*.
+  This emacs minor mode adds some extra functionality to org-mode tables. It's a bit hacked together at the moment. 
 
   To use, just put the .el file in your load-path and load the minor mode via 
 
