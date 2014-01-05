@@ -160,14 +160,16 @@ order."
 	 (label (concat (org-table-xtras-tbl-name) strindex ))
 	 )
     (save-excursion
-      (org-table-goto-line row)
-      (org-table-goto-column col)
-      (org-table-end-of-field 0)
-      (insert (concat " [fn:" label "]"))
-      (if update-table
+      (if (and (org-table-goto-line row) (<= col org-table-current-ncol))
 	  (progn
-	    (org-footnote-create-definition label)
-	    (insert (org-table-xtras-clean-entry-formula (cdr entry))))))))
+	    (org-table-goto-line row)
+	    (org-table-goto-column col)	   
+	    (org-table-end-of-field 0)
+	    (insert (concat " [fn:" label "]"))
+	    (if update-table
+		(progn
+		  (org-footnote-create-definition label)
+		  (insert (org-table-xtras-clean-entry-formula (cdr entry))))))))))
 
 (defun org-table-xtras-sort-formulas (x y)
   "Sort formulas by how they first occur in the table"
