@@ -41,22 +41,24 @@
 ;; Floor, Boston, MA 02110-1301, USA.
 ;;
 ;;
+;; Some Additional useful options when using org-table:
+;; (setq org-latex-tables-centered nil)
+;; 
+;; (setq org-calc-default-modes 
+;;  '(calc-internal-prec 12 
+;;  calc-float-format (fix 2) 
+;;  calc-angle-mode deg 
+;;  calc-prefer-frac nil 
+;;  calc-symbolic-mode nil 
+;;  calc-date-format (YYYY "-" MM "-" DD " " Www (" " hh ":" mm)) 
+;;  calc-display-working-message t 
+;;  calc-language nil))
+;;
 ;;; Code:
 
 (eval-when-compile
   (require 'cl))
 
-(setq org-latex-tables-centered nil)
-
-(setq org-calc-default-modes 
- '(calc-internal-prec 12 
- calc-float-format (fix 2) 
- calc-angle-mode deg 
- calc-prefer-frac nil 
- calc-symbolic-mode nil 
- calc-date-format (YYYY "-" MM "-" DD " " Www (" " hh ":" mm)) 
- calc-display-working-message t 
- calc-language nil))
 
 (defun org-table-xtras-copy-formula (n type &optional negative?)
   "Copy a formula N times, either across a :row, :column,
@@ -142,12 +144,9 @@ order."
 			      (replace-regexp-in-string expr "(\\1,\\2)"
 							(replace-regexp-in-string "\\$" "\\\\$" text)))))
 
-;; TODO: Figure out how to make all of the LaTeX code pretty-print automagically.
-
 (defun org-table-xtras-clean-entry-formula (text) 
-  "Format the TEXT formula into a LaTeX-valid formula representation"
+  "Format the TEXT formula into a nice-looking formula representation"
   (replace-regexp-in-string "\\$" "\\\\$" text))
-
 
 (defun org-table-xtras-update-table (entry index update-table)
   "Insert the correct footnote in the table"
