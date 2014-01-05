@@ -1,4 +1,4 @@
-% Created 2014-01-04 Sat 21:16
+% Created 2014-01-05 Sun 11:30
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -30,30 +30,42 @@
 
 \section{Example}
 \label{sec-1}
-
-
+\centering
+\begin{table}[htb]
+\caption{\label{example}Example Table}
 \begin{tabular}{llrr}
 A & B & C \footnotemark & D \footnotemark\\
 \hline
 230498.10 \footnotemark & 0.06 \footnotemark & 230498.16 & 0.24\\
 1203948501 & .08 & 1203948501.08 & 0.28\\
-\end{tabular}\footnotetext[1]{\$2+\$1}\footnotetext[2]{sqrt(\$2)}\footnotetext[3]{.10+230498}\footnotetext[4]{2/35}
+\end{tabular}
+\end{table}\footnotetext[1]{\$2+\$1}\footnotetext[2]{sqrt(\$2)}\footnotetext[3]{.10+230498}\footnotetext[4]{2/35}
 
 
-Another Table:
+\begin{table}[htb]
+\caption{\label{A}Table A}
+\begin{tabular}{ll}
+A & B\\
+\hline
+0.25 \footnotemark & 0.35 \footnotemark\\
+0.25 \footnotemark[5]{} & 0.25 \footnotemark[5]{}\\
+0.25 \footnotemark[5]{} & 0.25 \footnotemark[5]{}\\
+\end{tabular}
+\end{table}\footnotetext[5]{.25}\footnotetext[6]{.35}
 
-\begin{tabular}{lrllr}
+
+\begin{table}[htb]
+\caption{\label{R}Table R}
+\begin{tabular}{lrrrr}
  & Year & Sales & COGS & Gross Margin \footnotemark\\
 \hline
  & 2012 & 1.04 & .75 & 0.29\\
  & 2013 & 1.06 & .80 & 0.26\\
  & 2014 & 1.08 & 0.85 & 0.23\\
- & 2015 & 1.10 \footnotemark & 0.91 \footnotemark[6]{} & 0.19\\
- & 2016 & 1.12 \footnotemark[6]{} & 0.97 \footnotemark[6]{} & 0.15\\
- & 2017 & 1.14 \footnotemark[6]{} & 1.03 \footnotemark[6]{} & 0.11\\
- & 2018 & 1.16 \footnotemark[6]{} & 1.10 \footnotemark[6]{} & 0.06\\
- & 2019 & 1.18 \footnotemark[6]{} & 1.17 \footnotemark[6]{} & 0.01\\
- & 2020 & 1.20 \footnotemark[6]{} & 1.24 \footnotemark[6]{} & -0.05\\
-\end{tabular}\footnotetext[5]{\$Sales-\$COGS}\footnotetext[6]{@-1*(1+(@4-@3)/@3)}
+ & 2015 & 1.10 & 0.91 & 0.19\\
+ & 2016 & 1.12 \footnotemark & 0.97 \footnotemark[8]{} & 0.15\\
+ & 2020 & 1.20 \footnotemark[8]{} & 1.24 \footnotemark[8]{} & -0.05\\
+\end{tabular}
+\end{table}\footnotetext[7]{\$Sales-\$COGS}\footnotetext[8]{@-1*(1+(@5-@4)/@4)}
 % Emacs 24.3.50.1 (Org mode 8.2.4)
 \end{document}

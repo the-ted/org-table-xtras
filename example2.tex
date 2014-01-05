@@ -1,4 +1,4 @@
-% Created 2013-11-17 Sun 13:18
+% Created 2014-01-05 Sun 12:14
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -7,24 +7,22 @@
 \usepackage{longtable}
 \usepackage{float}
 \usepackage{wrapfig}
-\usepackage{soul}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{marvosym}
 \usepackage{wasysym}
-\usepackage{latexsym}
 \usepackage{amssymb}
-\usepackage{amstext}
 \usepackage{hyperref}
 \tolerance=1000
-\usepackage{threeparttable}
-\usepackage{threeparttable}
-\usepackage{threeparttable}
+\author{Ted Wiles}
 \date{\today}
 \title{example2}
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs 24.3.1 (Org mode 8.0.3)}}
+  pdfcreator={Emacs 24.3.50.1 (Org mode 8.2.4)}}
 \begin{document}
 
 \maketitle
@@ -33,79 +31,40 @@
 \section{Example 2}
 \label{sec-1}
 
-\begin{tabular}{r}
-13800.746\\
-\end{tabular}
+\begin{tabular}{ll}
+\$ \footnotemark & rate=.07\\
+\$ & n=50\\
+\$ & payment = 1000\\
+\# & 13800.75\\
+\^{} & Result\\
+\end{tabular}\footnotetext[1]{pv(\$rate,\$n,\$payment)}
 
-\begin{table}
-\centering
-\begin{threeparttable}
-\begin{tabular}{rlll}
-Year & Growth & Cash & Discounted Cash\\
+\begin{tabular}{lrlll}
+\footnotemark & Year & Growth \footnotemark & Cash & Discounted Cash\\
 \hline
-0 &  & 500 & 500\\
-1 & \(0.15\)\tnote{4} & \(575.00\)\tnote{3} & \(527.52\)\tnote{1}\\
-2 & \(0.15\)\tnote{4} & \(661.25\)\tnote{3} & \(556.56\)\tnote{1}\\
-3 & \(0.15\)\tnote{4} & \(760.44\)\tnote{3} & \(587.20\)\tnote{1}\\
-4 & \(0.15\)\tnote{4} & \(874.51\)\tnote{3} & \(619.52\)\tnote{1}\\
-5 & \(0.15\)\tnote{4} & \(1005.69\)\tnote{3} & \(653.63\)\tnote{1}\\
-6 & \(0.05\)\tnote{5} & \(1055.97\)\tnote{3} & \(629.64\)\tnote{1}\\
-7 & \(0.05\)\tnote{5} & \(1108.77\)\tnote{3} & \(606.54\)\tnote{1}\\
-8 & \(0.05\)\tnote{5} & \(1164.21\)\tnote{3} & \(584.28\)\tnote{1}\\
-9 & \(0.05\)\tnote{5} & \(1222.42\)\tnote{3} & \(562.84\)\tnote{1}\\
-10 & \(0.05\)\tnote{5} & \(1283.54\)\tnote{3} & \(542.18\)\tnote{1}\\
-10 & (perpetuity) & \(22034.10\)\tnote{2} & \(9307.44\)\tnote{1}\\
- &  &  & \(15677.35\)\tnote{6}\\
-\end{tabular}
-
-\begin{tablenotes}
-\item [1] \(\$-1*(1/(1+\mbox{\$COE})^{\$-3})\)
-\item [2] \((@-1(1+\mbox{\$g}))/(\mbox{\$COE}-\mbox{\$g})\)
-\item [3] \(@-1*(1+\$-1)\)
-\item [4] \(\mbox{\$g1t5}\)
-\item [5] \(\mbox{\$g6t10}\)
-\item [6] \(vsum(@2..@-1)\)
-\end{tablenotes}
-
-\end{threeparttable}
-\end{table}
+\# & 0 & 0.03 & 500 & 500\\
+\# & 1 & 0.15 \footnotemark & 575.00 \footnotemark & 527.52 \footnotemark\\
+\# & 2 & 0.15 \footnotemark[4]{} & 661.25 \footnotemark[5]{} & 556.56 \footnotemark[6]{}\\
+\# & 3 & 0.15 \footnotemark[4]{} & 760.44 \footnotemark[5]{} & 587.20 \footnotemark[6]{}\\
+\# & 4 & 0.15 \footnotemark[4]{} & 874.51 \footnotemark[5]{} & 619.52 \footnotemark[6]{}\\
+\# & 5 & 0.15 \footnotemark[4]{} & 1005.69 \footnotemark[5]{} & 653.63 \footnotemark[6]{}\\
+\# & 6 & 0.05 \footnotemark & 1055.97 \footnotemark[5]{} & 629.64 \footnotemark[6]{}\\
+\# & 7 & 0.05 \footnotemark[7]{} & 1108.77 \footnotemark[5]{} & 606.54 \footnotemark[6]{}\\
+\# & 8 & 0.05 \footnotemark[7]{} & 1164.21 \footnotemark[5]{} & 584.28 \footnotemark[6]{}\\
+\# & 9 & 0.05 \footnotemark[7]{} & 1222.42 \footnotemark[5]{} & 562.84 \footnotemark[6]{}\\
+\# & 10 & 0.05 \footnotemark[7]{} & 1283.54 \footnotemark[5]{} & 542.18 \footnotemark[6]{}\\
+\# & 10 & 0.03 & 22034.10 \footnotemark & 9307.44 \footnotemark[6]{}\\
+ &  & 0.05 & 1 \footnotemark & 15677.35\\
+\^{} &  &  & Cash & DCF\\
+\$ & g1t5=.15 & g6t10=.05 &  & \\
+ & 0.09 & 0.03 &  & \\
+\$ & COE=.09 & g=.03 &  & \\
+\end{tabular}\footnotetext[2]{vsum(@2..@-1)}\footnotetext[3]{\$g}\footnotetext[4]{\$g1t5}\footnotetext[5]{@-1*(1+\$-1)}\footnotetext[6]{\$-1*(1/(1+$\backslash$\(COE)^(\\)-3))}\footnotetext[7]{\$g6t10}\footnotetext[8]{(@-1(1+\$g))/(\$COE-\$g)}\footnotetext[9]{1}
 
 
-\begin{table}
-\centering
-\begin{threeparttable}
-
-\begin{tabular}{l|l}
-Column A & Column B\\
-\hline
-\(5\)\tnote{5} & \\
-\(\frac{1}{5}\)\tnote{4} & \\
-\(\frac{1}{2}\)\tnote{3} & \(\frac{1}{4}\)\tnote{2}\\
- & \(25\)\tnote{1}\\
-\(25\)\tnote{6} & \\
-\hline
-\end{tabular}
-
-\begin{tablenotes}
-\item [1] \(@-1*100\)
-\item [2] \(\frac{\$2}{2}\)
-\item [3] \(\frac{1}{2}\)
-\item [4] \(\frac{2}{10}\)
-\item [5] \(\mbox{\$parameter}\)
-\item [6] \(\mbox{\$parameter}*5\)
-\end{tablenotes}
-
-\end{threeparttable}
-\end{table}
-
-
-
-\begin{table}
-\centering
-\begin{threeparttable}
 
 \begin{tabular}{rr}
-COE & \(DCF\)\tnote{1}\\
+COE & DCF \footnotemark\\
 \hline
 .04 & 97480.87\\
 .05 & 48332.71\\
@@ -116,13 +75,6 @@ COE & \(DCF\)\tnote{1}\\
 .10 & 13365.25\\
 .11 & 11637.39\\
 .12 & 10298.65\\
-\end{tabular}
-
-\begin{tablenotes}
-\item [1] \('(org-table-xtras-eval-table "DCF" '(("COE" . \$1)) "DCF")\)
-\end{tablenotes}
-
-\end{threeparttable}
-\end{table}
-% Emacs 24.3.1 (Org mode 8.0.3)
+\end{tabular}\footnotetext[10]{'(org-table-xtras-eval-table "DCF" '(("COE" . \$1)) "DCF")}
+% Emacs 24.3.50.1 (Org mode 8.2.4)
 \end{document}

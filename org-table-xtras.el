@@ -41,18 +41,11 @@
 ;; Floor, Boston, MA 02110-1301, USA.
 ;;
 ;;
-;; Some Additional useful options when using org-table:
-;; (setq org-latex-tables-centered nil)
-;; 
-;; (setq org-calc-default-modes 
-;;  '(calc-internal-prec 12 
-;;  calc-float-format (fix 2) 
-;;  calc-angle-mode deg 
-;;  calc-prefer-frac nil 
-;;  calc-symbolic-mode nil 
-;;  calc-date-format (YYYY "-" MM "-" DD " " Www (" " hh ":" mm)) 
-;;  calc-display-working-message t 
-;;  calc-language nil))
+;; In order to get footnotes automatically added to your exported documents, put
+;; the following in your .emacs:
+;; (add-hook 'org-export-before-parsing-hook 'org-table-xtras-export-hook)
+;;
+;;
 ;;
 ;;; Code:
 
@@ -136,14 +129,6 @@ order."
 	(if (eq type :col) (string-to-int format-formula)
 	  0)))))
 
-(defun org-table-xtras-clean-entry-formula-old (text)
-  "Format the TEXT formula into a LaTeX-valid formula representation"
-  (let* ((expr "[\\.@]\\([0-9-]+\\)\\$\\(-?[0-9]+\\)")
-	 (expr-2 "\\$\\(-?[0-9]+\\)"))
-    (replace-regexp-in-string expr-2 "\\\\$\\1" 
-			      (replace-regexp-in-string expr "(\\1,\\2)"
-							(replace-regexp-in-string "\\$" "\\\\$" text)))))
-
 (defun org-table-xtras-clean-entry-formula (text) 
   "Format the TEXT formula into a nice-looking formula representation"
   (replace-regexp-in-string "\\$" "\\\\$" text))
@@ -168,6 +153,7 @@ order."
 	    (insert (concat " [fn:" label "]"))
 	    (if update-table
 		(progn
+		  (ignore-errors (org-footnote-delete-definitions (concat "fn:"label)))
 		  (org-footnote-create-definition label)
 		  (insert (org-table-xtras-clean-entry-formula (cdr entry))))))))))
 
@@ -209,9 +195,7 @@ Return the number of footnotes removed."
 	    (incf ndef))))
       ndef)))
 
-;; TODO: switch table name syntax to accept letters and numbers.
-
-(defun org-table-extras-remove-fns ()
+(defun org-table-xtras-remove-fns ()
   (interactive)
   (goto-char (org-table-begin))
   (org-xtras-footnote-delete-definitions (concat "fn:" (org-table-xtras-tbl-name) "--[0-9]*"))
@@ -223,7 +207,7 @@ Return the number of footnotes removed."
   "Print the formulas at the end of the table"
   (interactive)
   (let* ((fns (sort* (org-table-get-stored-formulas) 'org-table-xtras-sort-formulas)))
-    (org-table-extras-remove-fns)
+    (org-table-xtras-remove-fns)
     (org-table-xtras-insert-formulas (car fns) (cdr fns) 1)))
 
 (defun org-table-xtras-eval-table (TBLNAME ARGS OUTPUTVAR)
@@ -239,7 +223,7 @@ OUTPUTVAR is the name of the parameter that you want to return."
 	   (end (save-excursion 
 		  (progn 
 		    (goto-char (org-table-end))
-		    (org-TBLFM-begin)
+		    (org-table-TBLFM-begin)
 		    (line-end-position))))
 	   (buf (current-buffer)))
       (with-temp-buffer
@@ -285,6 +269,19 @@ the form '((ARGNAME . VALUE))"
 		   (read-from-minibuffer "No TBLNAME found. Insert new TBLNAME:")
 		   )))))))
 
+(defun org-table-xtras-run-print-formulas ()
+  "Do org-table-xtras-print-formulas on all of the named tables in the exported file."
+  (let ((search (re-search-forward "#\\+TBLNAME: +\\([A-z0-9]+ *$\\)" nil t)))
+    (next-line)
+    (org-table-xtras-print-formulas)
+    search))
+
+(defun org-table-xtras-export-hook (backend)
+  "A hook that will populate all of the tables with footnotes for export only."
+  (goto-char (point-min))
+  (while (org-table-xtras-run-print-formulas)
+    (org-table-xtras-run-print-formulas)))
+
 (define-minor-mode org-table-xtras-mode
   "Some Add-ins for org-table"
   :lighter " xtras"
@@ -293,8 +290,7 @@ the form '((ARGNAME . VALUE))"
 		(define-key map (kbd "C-c C-= C-f") 'org-table-xtras-copy-field-next-column)
 		(define-key map (kbd "C-c C-= C-d") 'org-table-xtras-copy-field-diagonally)
 		(define-key map (kbd "C-c C-= C-p") 'org-table-xtras-print-formulas)
+		(define-key map (kbd "C-c C-= C-r") 'org-table-xtras-remove-fns)
 		map))
-
-;; TODO: Hook print-formulas into the update-table process.
 
 (provide 'org-table-xtras-mode)

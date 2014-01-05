@@ -8,7 +8,9 @@
 M-x org-table-xtras
 #+END_SRC
 
-  This minor mode includes the following commands:
+** Copying Formulas
+
+   If you want to use a lot of field formulas, it's time consuming to copy the formulas into subsequent cells. This minor mode includes commands that will make this quicker.
 
 #+BEGIN_SRC 
 C-c C-= C-n : org-table-xtras-copy-field-next-row
@@ -28,12 +30,26 @@ C-c C-= C-d : org-table-xtras-copy-field-diagonally
 
   Similarly, but diagonally through the spreadsheet.
 
+** Exporting formulas
+
+   My biggest pet peeve with excel is that you can't quickly visualize all of the formulas going on in the spreadsheet at once. In order to get this functionality in org-mode, I defined a function that will add footnote references to all cells that have a formula. Cells with identical formulas reference the same footnote. 
+
+These two functions add and remove these footnotes from the table:
+
 #+BEGIN_SRC 
 C-c C-= C-p : org-table-xtras-print-formulas
+C-c C-= C-r : org-table-xtras-remove-fns
 #+END_SRC
 
-  This adds formulas in a *tablenotes* environment below the table, and adds reference footnotes to the relevant table cells. If you'd like to edit the table after including the reference footnotes, C-u C-u C-c C-* will recalculate the table.
+Note that these functions require the table to be named.
 
+However, it's can also be convenient to handle the footnote generation at the export stage. In order to do this, add the following code to your .emacs:
+
+#+BEGIN_SRC 
+(add-hook 'org-export-before-parsing-hook 'org-table-xtras-export-hook)
+#+END_SRC
+
+This creates the footnotes before exporting for all named tables.
 
   See [[example.org]] for an example. This org-file generates [[example.pdf]].
 
