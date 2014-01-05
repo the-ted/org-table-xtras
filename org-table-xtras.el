@@ -207,6 +207,7 @@ Return the number of footnotes removed."
 	    (incf ndef))))
       ndef)))
 
+;; TODO: switch table name syntax to accept letters and numbers.
 
 (defun org-table-extras-remove-fns ()
   (interactive)
